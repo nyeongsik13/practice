@@ -7,10 +7,13 @@ router.use(express.json());
 
 router.post('/write', async (req, res, next) => {
     const { title, content, password } = req.body;
-    // const writeMaxOrder = await Write.findOne().sort('-order').exec()
-    // const order = writeMaxOrder?writeMaxOrder.order+1:1
     try {
-        const newWrite = new Write({ title, content, password });
+        let order = 1
+        const writeMaxOrder = await Write.findOne().sort({ order: -1 }).exec();
+        if (writeMaxOrder && writeMaxOrder.order) {
+            order = writeMaxOrder.order + 1;
+        }
+        const newWrite = new Write({ title, content, password, order, });
         await newWrite.save();
         return res.status(201).json({ write: newWrite });
     } catch (error) {

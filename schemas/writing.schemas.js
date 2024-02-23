@@ -12,11 +12,11 @@ const WriteSchema = new mongoose.Schema({
     content: {
         type: String,
         required: true
+    },
+    order: {
+        type: Number,
+        required: true
     }
-    // order: {
-    //     type: Number,
-    //     required: true
-    // }
     
 
 })
